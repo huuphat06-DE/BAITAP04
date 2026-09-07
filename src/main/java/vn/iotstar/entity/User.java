@@ -27,7 +27,25 @@ public class User implements Serializable {
     private String otpCode;
     private LocalDateTime otpExpiryTime;
 
+    @Column(columnDefinition="NVARCHAR(255)")
+    private String fullname;
+    
+    @Column(columnDefinition="VARCHAR(20)")
+    private String phone;
+    
+    @Column(columnDefinition="VARCHAR(255)")
+    private String images;
+
+
     public User() {}
+
+    public String getFullname() { return fullname; }
+    public void setFullname(String fullname) { this.fullname = fullname; }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+    public String getImages() { return images; }
+    public void setImages(String images) { this.images = images; }
+    
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

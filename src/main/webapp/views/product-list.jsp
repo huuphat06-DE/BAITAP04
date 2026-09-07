@@ -1,34 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
-<head><title>Products</title></head>
+<head><title>Sản Phẩm</title></head>
 <body>
-    <h1>Tất cả sản phẩm</h1>
-    <a href="${pageContext.request.contextPath}/home">Về trang chủ</a>
-    <hr>
-    <div style="display: flex; flex-wrap: wrap;">
+    <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+        <h2 class="fw-bold">Tất cả sản phẩm</h2>
+        <a href="${pageContext.request.contextPath}/home" class="btn btn-outline-secondary">Về trang chủ</a>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mb-4">
         <c:forEach items="${products}" var="p">
-            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px; width: 200px; text-align: center;">
-                <a href="${pageContext.request.contextPath}/product/detail?id=${p.id}">
-                    <img height="100" src="${pageContext.request.contextPath}/image?fname=${p.image}" /><br>
-                    <b>${p.name}</b><br>
-                    Giá: ${p.price}
-                </a>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <a href="${pageContext.request.contextPath}/product/detail?id=${p.id}" class="text-decoration-none text-dark">
+                        <img src="${pageContext.request.contextPath}/image?fname=${p.image}" class="card-img-top" style="height: 250px; object-fit: cover;" alt="${p.name}">
+                        <div class="card-body text-center">
+                            <h6 class="card-title text-truncate fw-bold">${p.name}</h6>
+                            <p class="card-text text-danger fw-bold">${p.price} đ</p>
+                        </div>
+                    </a>
+                </div>
             </div>
         </c:forEach>
     </div>
-    <hr>
-    <div>
-        <c:if test="${totalPage > 0}">
-            <c:forEach begin="0" end="${totalPage - 1}" var="i">
-                <c:if test="${i == currentPage}">
-                    <b>[${i + 1}]</b>
-                </c:if>
-                <c:if test="${i != currentPage}">
-                    <a href="${pageContext.request.contextPath}/product?page=${i}">[${i + 1}]</a>
-                </c:if>
-            </c:forEach>
-        </c:if>
-    </div>
+    
+    <nav>
+        <ul class="pagination justify-content-center">
+            <c:if test="${totalPage > 0}">
+                <c:forEach begin="0" end="${totalPage - 1}" var="i">
+                    <li class="page-item ${i == currentPage ? 'active' : ''}">
+                        <a class="page-link" href="${pageContext.request.contextPath}/product?page=${i}">${i + 1}</a>
+                    </li>
+                </c:forEach>
+            </c:if>
+        </ul>
+    </nav>
 </body>
-</html>
+</html>\n
