@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <html>
 <head><title>Quản lý Sản Phẩm</title></head>
 <body>
@@ -18,9 +20,19 @@
         <c:forEach items="${listprod}" var="p">
             <tr>
                 <td>${p.id}</td>
-                <td><img height="50" src="${pageContext.request.contextPath}/image?fname=${p.image}" /></td>
+                <td>
+                    <c:choose>
+                        <c:when test="${not empty p.image and fn:startsWith(p.image, 'http')}">
+                            <c:set var="imgUrl" value="${p.image}" />
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="imgUrl" value="${pageContext.request.contextPath}/image?fname=${p.image}" />
+                        </c:otherwise>
+                    </c:choose>
+                    <img height="50" src="${imgUrl}" />
+                </td>
                 <td>${p.name}</td>
-                <td>${p.price}</td>
+                <td><fmt:formatNumber value="${p.price}" pattern="#,###"/> đ</td>
                 <td>${p.category.categoryname}</td>
                 <td>
                     <a href="${pageContext.request.contextPath}/admin/product/edit?id=${p.id}">Sửa</a> |
